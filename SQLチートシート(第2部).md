@@ -112,6 +112,11 @@
 			WHEN [性別] = 'M' THEN '男性'
 			WHEN [性別] = 'F' THEN '女性'
 		 END
+	/* 別解
+		 CASE  [性別]
+			WHEN 'M' THEN '男性'
+			WHEN 'F' THEN '女性'
+	*/	 END
 		AS [属性]
 	  FROM [dokoQL].[dbo].[回答者_tbl];
 
@@ -132,6 +137,22 @@
 			   		   WHEN 'vn' THEN	'ベトナム'
 					END
 
+	実例
+	/* 
+		事由区分ごとの入室回数を取得する。
+		その際、事由区分はわかりやすい表記にすること
+	*/
+	SELECT 
+		CASE [事由区分]
+				WHEN '1' THEN 'メンテナンス'
+				WHEN '2' THEN 'リリース作業'
+				WHEN '3' THEN '障害対応'
+				ELSE 'その他'
+		END AS [事由]
+	   ,COUNT(*) AS [入室回数]
+	  FROM [dokoQL].[dbo].[入退室管理_tbl]
+	  GROUP BY [事由区分]
+	  ORDER BY [事由区分] ASC;
 
 #### ユーザ定義関数
 		あらかじめ用意された関数ではなく、

@@ -158,6 +158,12 @@
 	INSERT文で、値にNULLと書く
 		INSERT INTO テーブル名(列名1,列名2)
 	 	VALUES(値1,NULL) ;
+	 	
+	UPDATE文で、値をNULLに更新する
+		UPDATE テーブル名
+		SET 列名 = NULL
+		WHERE (修飾);
+
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 ## データインポート方法
 

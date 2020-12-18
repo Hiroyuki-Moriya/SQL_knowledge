@@ -1,6 +1,26 @@
 # SQLチートシート (第1部　/　全4部)
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+## 参考文献
+
+ スッキリわかるSQL入門 第２版
+ dokoQL デスクトップ版
+  https://dokoQL/d/
+    ID：SUKKIRI=2800YEN
+    PW：（何も入力しない）
+
+ Microsoft SQL Transact-SQL リファレンス (データベース エンジン)
+  （Docs＞SQL＞リファレンス＞Transact-SQL (T-SQL) リファレンス）
+  https://docs.microsoft.com/ja-jp/sql/t-sql/language-reference?view=sql-server-ver15
+
+ Microsoft SQL データベース関数
+  （Docs＞SQL＞リファレンス＞Transact-SQL (T-SQL) リファレンス＞関数）
+  https://docs.microsoft.com/ja-jp/sql/t-sql/functions/functions?view=sql-server-ver15
+
+ 逆引きSQL構文集
+  http://www.sql-reference.com/index.html#string
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 ## 基本文法
 	/* コメント */
 	-- コメント
@@ -8,14 +28,14 @@
 	SELECT 列名 -- ★SELECT文には他の句もつくので、全貌は第2部を参照
 	  FROM テーブル名
 	 WHERE (修飾)(その他修飾);
-	 
+
 
 	UPDATE テーブル名 -- ★WHEREのないUPDATE命令は全件更新！
 	   SET 列名1=数値,列名2='文字列'
 	 WHERE (修飾);
 
 	DELETE FROM テーブル名 -- ★WHEREのないDELETE命令は全件削除！
-	 WHERE (修飾); 
+	 WHERE (修飾);
 
 	INSERT INTO テーブル名(列名1,列名2)
 	 VALUES(値1,値2) ;
@@ -24,6 +44,12 @@
 	 ・1行追加の時はinsertとvalueが1文づつ必要。i行のinsert文にvaluesは2行書けない
 	 ・値が決まっていない(=null)の列については、valuesに空文''やNullを書くのではなく、insert文の列名を書かない。
 	 */
+
+	☆ データ全件を削除する命令にはDELETEとTRUNCATEがある。
+	☆TRUNCATEは厳密にはデータ削除ではなく、テーブル初期化の命令で、
+	☆「テーブルをDROPした後、同じものをCREATEする」イメージ。
+	☆詳細はSQLチートシート (第3部)を参照。
+
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 ## 別名定義
@@ -34,7 +60,7 @@
 ## 条件式
 
 ### 比較演算子
-	  = 
+	  =
 	  <
 	  >
 	  <=
@@ -42,7 +68,7 @@
 	  <>
 	 IS NULL   -- ★NULLは=演算子では判定できない
 	 IS NOT NULL
-	 
+
 ### LIKE
 	WHERE 列名 LIKE パターン文字列
 	　-- パターン文字列
@@ -91,17 +117,17 @@
 	　　日付 <= '2018-03-31'  -- 2018-03-31 00:00:00と解釈するDBMSがあると、2018-03-31 10:30:00は含まれなくなってしまう
 	　　日付 <  '2018-04-01'  -- このように書くべき
 
- 
+
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 ## データ型
 
 ### 基本のデータ型
 	 整数
 	  整数値　INTEGER型
-	  小数    DECIMAI型 REAL型 
+	  小数    DECIMAI型 REAL型
 	 文字列
 	  固定長 CHAR型
-	  可変長 VARCHAR型 
+	  可変長 VARCHAR型
 	 日付と時刻
 	         DATETIME型
 	         DATE型
@@ -156,14 +182,14 @@
 	Ctrl + 0キーを押すか値を空にしてEnterキーを押します。
 
 	CSVでNULL値を入れたい場合はNULLの部分に\Nを使用すればよい
-	
+
 	データのインポートで、ソースにEXCELのデータを使う場合、かつ、DB側の型がintの場合は、EXCELのセルにNULLと書けばよい。
 	データのインポートで、ソースにEXCELのデータを使う場合、かつ、DB側の型がcharの場合は、EXCELのセルに何も入れてはならない。
-	
+
 	INSERT文で、値にNULLと書く
 		INSERT INTO テーブル名(列名1,列名2)
 	 	VALUES(値1,NULL) ;
-	 	
+
 	UPDATE文で、値をNULLに更新する
 		UPDATE テーブル名
 		SET 列名 = NULL
@@ -226,7 +252,7 @@
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 ## SELECT文にのみ可能な“検索結果を加工する”ための「その他修飾」
-	SELECT 列名 
+	SELECT 列名
 	  FROM テーブル名
 	 WHERE (修飾)(その他修飾);
 
@@ -238,7 +264,7 @@
 	--      SELECT DISTINCT 費目 FROM 家計簿_TBL
 
 ### ORDER BY  検索結果の順序を並び替える。メモリーを大量消費するので乱用に注意
-	SELECT 列名 … 
+	SELECT 列名 …
 	  FROM テーブル名
 	  ORDER BY 列名1 並び順,  列名2 並び順, … -- ★ASC(昇順、省略値),DESC(降順)
 
@@ -246,7 +272,7 @@
 	--      SELECT * FROM 家計簿_TBL
 		    ORDER BY 入金額 DESC, 出金額 DESC
 
-	SELECT 列名1,列名2, … 
+	SELECT 列名1,列名2, …
 	  FROM テーブル名
 	  ORDER BY 列番号1 並び順,  列番号2 並び順, … -- ★列番号は、SELECT文で選択された列のリストの順番
 
@@ -255,7 +281,7 @@
 		    ORDER BY 3 DESC,  4 DESC
 
 ### OFFSET - FETCH 検索結果から件数を限定して取得する
-	SELECT 列名 … 
+	SELECT 列名 …
 	  FROM テーブル名
 	  ORDER BY 列名1 並び順,  列名2 並び順
 	  OFFSET 先頭から除外する行数 ROWS -- ★除外せずに先頭から取得するときは 0 ROWS を指定する
@@ -266,13 +292,22 @@
 		    ORDER BY 出金額 DESC
 		    OFFSET 10 ROWS         -- 先頭10行を除外
 		    FETCH NEXT 5 ROWS ONLY -- そのあとに続く5行を取得する
-	/* ★ OFFSET - FETCHは、DBMSごとに異なるので、注意が必要 */
+	/* ★ OFFSET - FETCHは、DBMSごとに異なるので、注意が必要
+		SQL Server FETCH (Transact-SQL) https://docs.microsoft.com/ja-jp/sql/t-sql/language-elements/fetch-transact-sql?view=sql-server-ver15
+			引数の抜粋
+				NEXT…現在の行の直後にある行を結果行として返し、この返した行に現在の行を加えます。
+				　　　　カーソルに対する最初のフェッチが FETCH NEXT の場合、結果セットの先頭の行が返ります。
+				FIRST…カーソル内の先頭行を返し、これを現在の行にします。
+				LAST…カーソル内の最終行を返し、これを現在の行にします。
+				ABSOLUTE { n| @nvar}…n または @nvar が正の値の場合は、カーソルの先頭から n 行目の行を返し、返した行を新しい現在の行にします。
+	 */
+
 
 ### UNION     和集合の集合演算子。検索結果にほかの検索結果を足し合わせる。メモリーを大量消費するので乱用に注意
 	SELECT 文1
 	  UNION (ALL) -- ALLを付けないと重複行を1行にまとめ、ALLを付けると重複行をそのまま返す。
 	SELECT 文2
-	
+
 	/* 事例 家計簿DBは件数が多くなり検索時間がかかるようになったので、
 	   当月とそれ以外（アーカイブ）に分けて運用することにした。
 	   ただし、１年間の結果を検索するときだけ両方を参照したい。 */
@@ -288,6 +323,39 @@
 	   ★ UNIONのORDER BY は通常、列番号指定で行う。列名やASによる別名の場合は最初のSELECT文のものを指定する。
 	*/
 
+	/* 事例
+		ドリルA LEVEL3-32
+		口座テーブルと廃止口座テーブルに登録されている口座番号と残高の一覧を取得する。
+		ただし、口座テーブルは残高がゼロのもの、廃止口座テーブルは解約時残高がゼロではないものを抽出の対象とする。
+		一覧は口座番号順とする。
+	*/
+	SELECT [口座番号]
+	      ,[残高]
+	  FROM [dokoQL].[dbo].[口座_t]
+	  WHERE [残高] = 0 -- ★それぞれのテーブルで条件抽出してUNIONで和集合にする
+	UNION
+	SELECT [口座番号]
+	      ,[解約時残高]
+	  FROM [dokoQL].[dbo].[廃止口座_t]
+	  WHERE [解約時残高] <> 0 -- ★それぞれのテーブルで条件抽出してUNIONで和集合にする
+	  ORDER BY 1 ASC;
+
+	/* 事例
+		ドリルA LEVEL3-33
+		口座テーブルと廃止口座テーブルに登録されている口座番号と名義の一覧を取得する。
+		一覧は名義順とし、その口座の状況がわかるように、有効な口座には「〇」を、廃止した口座には「×」を一覧に付記すること。
+	*/
+	SELECT [口座番号]
+	      ,[名義]
+	      , '〇' AS [口座区分] -- ★新しい列名「口座区分」を用意して〇印を入れる
+	  FROM [dokoQL].[dbo].[口座_t]
+	UNION
+	SELECT [口座番号]
+	      ,[名義]
+	      , '×' AS [口座区分]  -- ★新しい列名「口座区分」を用意して×印を入れる
+	  FROM [dokoQL].[dbo].[廃止口座_t]
+	  ORDER BY 2
+  
 ### EXCEPT / MINUS   差集合の集合演算子。検索結果からほかの検索結果を差し引く(MINUSはOracleDBのキーワード)
 	SELECT 文1 -- 集合A
 	  EXCEPT (ALL)      -- ALLを付けないと重複行を1行にまとめ、ALLを付けると重複行をそのまま返す。

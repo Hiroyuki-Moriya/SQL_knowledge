@@ -7,8 +7,6 @@ See the [wiki](https://github.com/Hiroyuki-Moriya/SQL_knowledge/wiki) for detail
 # 記載内容一覧
 ---
 # SQLチートシート (第1部　/　全4部) 
-## 参考文献  
-  http://www.sql-reference.com/index.html#string  
 ## 基本文法  
 ## 別名定義  
 ## 条件式  

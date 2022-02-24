@@ -2344,10 +2344,10 @@
 
   (移出先)SSMSが同じバージョンのとき
   dokoQL.bakをココ↓に入れる
-    C:\Program Files\Microsoft SQL Server\MSSQL12.SQLEXPRESS\MSSQL\Backup
-	SSMSのdokoQLを右クリック＞タスク＞復元＞データベース
-	デバイスのラジオボタンを選択
-  バー右の･･･をクリックして、「バックアップデバイスの選択」ウィンドゥを開く
+    C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\Backup
+	SSMSのdデータベースを右クリック＞データベースの復元
+	データベースの復元ウィンドゥ　＞　ソースのラジオボタンでデバイス選択
+    ファイル名選択の右の･･･をクリックして、「バックアップデバイスの選択」ウィンドゥを開く
   「追加」ボタンを押して、dokoQL.bakを選択する
 
 	 Microsoft SQL Transact-SQL リファレンス
